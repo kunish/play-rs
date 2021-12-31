@@ -4,7 +4,7 @@ use std::io::Write;
 
 pub struct Task<'a> {
     url: String,
-    file_name: &'a String,
+    file_name: &'a str,
     client: reqwest::Client,
 }
 
@@ -13,7 +13,7 @@ pub struct TaskResult {
 }
 
 impl<'a> Task<'a> {
-    pub fn new(url: String, file_name: &'a String) -> Self {
+    pub fn new(url: String, file_name: &'a str) -> Self {
         let client = reqwest::Client::new();
 
         Self {
@@ -41,7 +41,7 @@ impl<'a> Task<'a> {
         let mut downloaded: u64 = 0;
 
         while let Some(chunk) = res.chunk().await.unwrap() {
-            file.write(&chunk).unwrap_or(0);
+            file.write_all(&chunk).unwrap();
             downloaded += chunk.len() as u64;
             let percent = ((downloaded as f64 / total as f64) * 100.0).round();
             on_progress(percent);
