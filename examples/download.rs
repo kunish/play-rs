@@ -1,4 +1,4 @@
-use rust_playground::download::Task;
+use play_rs::download::Task;
 
 #[tokio::main]
 async fn main() {

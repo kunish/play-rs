@@ -1,5 +1,5 @@
 use futures;
-use rust_playground::download;
+use play_rs::download;
 use std::sync::{Arc, Mutex};
 
 #[tokio::main]
