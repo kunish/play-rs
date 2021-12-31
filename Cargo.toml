@@ -1,9 +1,11 @@
 [package]
-name = "rust-playground"
+name = "rust_playground"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
 futures = "0.3.19"
-reqwest = "0.11.8"
+reqwest = { version = "0.11.8", features = ["blocking"] }
+threadpool = "1.8.1"
 tokio = { version = "1", features = ["full"] }
+tokio-stream = "0.1.8"

@@ -2,9 +2,9 @@ use reqwest;
 use std::fs::File;
 use std::io::Write;
 
-pub struct Task {
+pub struct Task<'a> {
     url: String,
-    file_name: String,
+    file_name: &'a String,
     client: reqwest::Client,
 }
 
@@ -12,8 +12,8 @@ pub struct TaskResult {
     pub file_name: String,
 }
 
-impl Task {
-    pub fn new(url: String, file_name: String) -> Self {
+impl<'a> Task<'a> {
+    pub fn new(url: String, file_name: &'a String) -> Self {
         let client = reqwest::Client::new();
 
         Self {
@@ -23,7 +23,7 @@ impl Task {
         }
     }
 
-    pub async fn run<T>(&self, on_progress: T) -> Result<TaskResult, ()>
+    pub async fn run<T>(&self, on_progress: T) -> Result<(), ()>
     where
         T: Fn(f64),
     {
@@ -47,8 +47,6 @@ impl Task {
             on_progress(percent);
         }
 
-        Ok(TaskResult {
-            file_name: self.file_name.clone(),
-        })
+        Ok(())
     }
 }
